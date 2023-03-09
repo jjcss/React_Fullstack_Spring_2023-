@@ -175,7 +175,106 @@
     </details>
     
 ## Review Code Template
-Take a few minutes to review the code in Visual Studio code. What is in the file, is the **front-end** of our website. The main files you should take a look at is the `App.jsx` & `App.css` files. As you can see, we will be building a movie review and movie name list application. Currently, since we have no backend, nothing happens 
+Take a few minutes to review the code in Visual Studio code. What is in the file, is the **front-end** of our website. The main files you should take a look at is the `App.jsx` & `App.css` files. As you can see, we will be building a movie review and movie name list application. Currently, since we have no backend, nothing happens when we press enter on an input or when we click a button.
+
+## Creating our Backend Server
+**Description**: In this section, we will be creating our **backend server** through the installation of various packages and a few other things.
+
+1. Creating client folder
+    - After reviewing our code, in VS Code let's create a `client` folder that we will use to store all our **front-end code**. 
+        <details>
+        <summary>Client folder</summary>
+        <img src="https://i.imgur.com/CrvY5eO.gif" alt="drawing" width="500" height="300"/>
+        </details>
+    - Next, let's drag in all our files in our "Initial_Code" folder and insert them into the `client` folder. Make sure all files are now in the `client` folder.
+        <details>
+        <summary>Add files to Client folder</summary>
+        <img src="https://i.imgur.com/Ts5xmQy.gif" alt="drawing" width="500" height="300"/>
+        </details>
+    - If you haven't noticed, go back to your browser tab that shows our applications website. Reload the page. You should see the "This localhost page can’t be found" message on your browser. This is because we created a new folder and we aren't directly inside of it from our terminal. To fix this, go to your terminal and exit out of your environment with the command `control c`. Now, enter the command `cd client` into your terminal. Now, enter the command `npm run dev` to start your environment again. Reload your browser. 
+        <details>
+        <summary>Re-run environment</summary>
+        <img src="https://i.imgur.com/CsIZUAz.gif" alt="drawing" width="500" height="300"/>
+        </details>
+2. Creating server folder
+    - Let's go back to VS Code, and outside of the `client` folder, let's create a `server` folder. We will include all our logic relating to our backend inside of this folder.
+        <details>
+        <summary>Server folder</summary>
+        <img src="https://i.imgur.com/ETLXG4E.gif" alt="drawing" width="500" height="300"/>
+        </details>
+    - Next, let's open up a new terminal tab, but make sure you are inside of the "Initial_Code" directory. We should be familiar with these steps. In the new terminal let's enter the command `cd server`. Similar to running the front-end environment, we will have to run a backend environment that will be running in the back. We still have a few more steps to have our backend invironment running.
+        <details>
+        <summary>cd server</summary>
+        <img src="https://i.imgur.com/p33Gfzf.gif" alt="drawing" width="500" height="300"/>
+        </details>
+3. Running Server Node Packages
+    - Now, still in our server terminal, let's enter in the command `npm init`. Press ente/yesr to anything your terminal asks you. This command will create a "package.json" file in your VS Code that will contain all our server packages.
+        <details>
+        <summary>npm init</summary>
+        <img src="https://i.imgur.com/oXBu9DE.gif" alt="drawing" width="500" height="300"/>
+        </details>
+        <details>
+        <summary>package.json file</summary>
+        <img src="https://i.imgur.com/g6vhuIZ.png" alt="drawing" width="500" height="300"/>
+        </details>
+    - Next, we are going to install a few more packages that will allow us to run our server successfully. Go back to your server terminal and enter the command `npm install express body-parser mysql nodemon cors`. After they're done installing, you should see the new additions in your "package.json" file.
+        - express: our actual express server
+        - body-parser: parses our request and converts it into a format from which you can easily extract relevant information
+        - mysql: database we will be using for our application
+        - nodemon: will automatically refresh our backend when we add new code
+        - cors: will allow our backend to communicate with the frontend
+        <details>
+        <summary>install more packages</summary>
+        <img src="https://i.imgur.com/iqgqQub.gif" alt="drawing" width="500" height="300"/>
+        </details>
+    - Lastly, since we've installed the **nodemon** package, let's go to our `package.json` file in our VS Code. Your file probably looks like this:
+        - > {
+              "name": "server",
+              "version": "1.0.0",
+              "description": "",
+              "main": "index.js",
+              "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1"
+              },
+              "author": "",
+              "license": "ISC",
+              "dependencies": {
+                "body-parser": "^1.20.2",
+                "cors": "^2.8.5",
+                "express": "^4.18.2",
+                "mysql": "^2.18.1",
+                "nodemon": "^2.0.21"
+              }
+            }
+        - Let's update this file to include these two nodemon lines, inside of "scripts". The lines below will allow our server backend to refresh continuously without us having to restart it everytime we make a new change:
+            - > "start": "node index.js",
+    "devStart": "nodemon index.js",
+        - Your `package.json` file should now have this code:
+            - > {
+                  "name": "server",
+                  "version": "1.0.0",
+                  "description": "",
+                  "main": "index.js",
+                  "scripts": {
+                    "start": "node index.js",
+                    "devStart": "nodemon index.js",
+                    "test": "echo \"Error: no test specified\" && exit 1"
+                  },
+                  "author": "",
+                  "license": "ISC",
+                  "dependencies": {
+                    "body-parser": "^1.20.2",
+                    "cors": "^2.8.5",
+                    "express": "^4.18.2",
+                    "mysql": "^2.18.1",
+                    "nodemon": "^2.0.21"
+                  }
+                }
+
+4. Creating Server File (index.js)
+    - ...
+
+
 
 ## Hello World
 
