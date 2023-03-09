@@ -272,9 +272,39 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
                 }
 
 4. Creating Server File (index.js)
-    - ...
+    - Now, let's go back to VS Code, and inside of our `server` folder, let's create a `index.js` file. In this file, we'll include logic for our backend.
+        <details>
+        <summary>create index.js file</summary>
+        <img src="https://i.imgur.com/kqpCvX0.gif" alt="drawing" width="500" height="300"/>
+        </details>
+    - In your new `index.js` file, enter the following code. The important lines of code you should know is "app.listen()" & creating your express server in the first two lines of code:
+        ```
+        // code that will make our backend server run
+        const express = require("express"); 
+        const app = express(); // setting up our express server
+        const bodyParser = require("body-parser");
+        const cors = require("cors");
 
 
+        // code that will save ud errors in the future
+        app.use(cors());
+        app.use(express.json());
+        app.use(bodyParser.urlencoded({extended:true}));
+        //
+
+        // let's us run our backend server. Message will output in our server terminal
+        app.listen(3001, () => {
+            console.log("running on port 3001");
+        })
+        ```
+
+5. Running your backend server
+    - Now that you've installed all necessary packages and included the boiler plate code, let's run our backend server. Enter the command `npm run devStart` in your backend terminal. If you've done everything correctly up until this point, you should see the following messages on your terminal.
+        <details>
+        <summary>run backend server</summary>
+        <img src="https://i.imgur.com/14JQ2Mj.gif" alt="drawing" width="500" height="300"/>
+        </details>
+        
 
 ## Hello World
 
