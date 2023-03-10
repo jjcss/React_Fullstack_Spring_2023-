@@ -366,91 +366,165 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
 
 ## Connect MySQL Database to your React Project
 **Description**: We will be connecting the database that we just created with our React Project (backend server).
-1. 
-
-
-## Hello World
-
-**Description**: In this part of the demo we will start off by learning the fundamental react code that allows us to display and render elements.
-
-0) Let's head over to our `index.js` file, located in the **`src`** folder. The **`index.js`** file is important as this is where we are rendering our React code that displays in the **root** class element in the `index.html` file in the **`public`** folder. Once in this file, delete everything on this file and copy & paste the code below.
-
-    ```JSX
-    import React from "react";
-    import ReactDOM from "react-dom/client";
-
-    const htmlContainer = document.getElementById("root");
-    const root = ReactDOM.createRoot(htmlContainer);
-
-    root.render(<h1>Hello World!</h1>)
+1. Let's head back to our VS Code, but make sure you don't exit out of your MySQL Workbench database. Let's head to the `server` folder and let's then click on the `index.js` file.
+2. Similar to how we created variables for "cors", "express", and "bodyparser", we are going to create a variables for "mysql". This will allow us to create SQL commands and connect our DB. So, under the `const cors = require("cors")` line, enter the following line:
     ```
-    This code will display **`Hello World!`** in your browser.
-    <details>
-        <summary>Hello World in Browser</summary>
-        <img src="https://i.imgur.com/7dO5ZGo.png" alt="drawing" width="500" height="200"/>
-    </details>
-
-1) Let's look at the first line of code: **`import React from "react";`**. This Line isn't really necessary, but it's good practice to include it to let your code editor import the React library into this file. 
-
-    
-2) In the next line: **`import ReactDOM from "react-dom/client";`**, we are importing the **ReactDOM** library, which will allow us to create a **Root** and allow us to **render** a React element into the **Dom**. In simplified terms, this line allows us to render an **HTML** file.
-
-3) Next up, we have the following line: **`const htmlContainer = document.getElementById("root");`**. 
-    
-    Going from left ----> right: 
-    1) we first have `const htmlContainer`. We are creating a constant variable, meaning we can't update this variable to anything else. 
-    2) After that we have `= document.getElementById("root")`. For those familiar with HTML, we are basically saying, select an HTML file (**index.html** in this case) and locate the element that has the **"root"** class name. 
-    3) If you go back to your **index.html** file, try to locate the root file. To sum up, this line is creating a variable that is accessing the **index.html** file that has the **root** class name.
-
-4) Next up, we have the following line: **`const root = ReactDOM.createRoot(htmlContainer);`**. 
-
-    Going from left ----> right: 
-    1) we first have `const root`. We are creating a constant variable named root, meaning we can't update this variable to anything else. 
-    2) After that, we have `= ReactDOM.createRoot(htmlContainer);`. Here we are using the ReactDOM Module we imported in the second line of this file. Then, we access the function **createRoot()**, which takes in **htmlContainer** that we initialized in the previous line. In simple terms, we are using **ReactDOM** to create a root (or connection) to the HTML file (htmlContainer).
-
-5) Finally, we have this line: **`root.render(<h1>Hello World!</h1>)`**.
-    
-    Using the **root** variable we defined earlier we are using the **render** function to render what is known as **JSX** elements, and what looks basically the same as **HTML** elements.
- 
-## JSX (similar to HTML elements)
-
-1) JSX means **JavaScript Syntax Extension** or **JavaScript XML** as some like to put it. In other words, JSX is an HTML-like syntax that you can use in React.
-
-    For example, in the **`root.render(<h1>Hello World!</h1>)`**, we are rendering what looks very similar to a **h1** HTML tag. They have the same name but aren't really the same thing. 
-    
-    Let's try another example of JSX. Copy the code below inside of **root.render()**:
-    
-    ```
-    root.render(
-        <div>
-          <h1>Hello World!</h1>
-          <h1>Hi Again</h1>
-        </div>
-    )
+    const mysql = require("mysql");
     ```
     <details>
-        <summary>Example in Browser</summary>
-        <img src="https://i.imgur.com/NEvEnhq.png" alt="drawing" width="500" height="200"/>
-    </details>
-    Here we have a **div** JSX element (container),  and a pair of **h1** JSX elements. They have the same functionality as regular HTML elements but are not to be mistaken of being the same.
-    
-    Let's try another example of JSX code. Enter this line of code:
-    
+                <summary>Updated index.js file </summary>
+                <img src="https://i.imgur.com/XP2gSkc.png" alt="drawing" width="500" height="300"/>
+                </details>
+3. Next, we are now going to create a connection to our database with the variable we just created. Two lines under the code above, let's add in the following code:
     ```
-    root.render(
-        <>
-          <h3>Hello World!</h3>
-          <h3>Hi Again</h3>
-        </>
-
-    )
+    // will allow us to create a connection with our MySQL Database
+    const db = mysql.createPool({
+        host: 'localhost',
+        user: 'root',
+        password: 'Enter_your_password_here',
+        database: 'MovieReviews'
+    });
     ```
+    - `createPool` -> function used to allow us to create conenction with db
+    - `host` -> enter the name of your system host. If you don't know, put `localhost`, as that is the default name for MySQL DB's.
+    - `user` -> enter the username of your DB connection. The default is `root`, unless you changes it
+    - `password` -> When you installed MySQL Workbench, you were asked for a password. Put the password you entered.
+    - `database` -> Enter the name of the database you create in Workbench. In this tutorial we name our DB `MovieReviews`
     <details>
-        <summary>Example in Browser</summary>
-        <img src="https://i.imgur.com/uFP8m0X.png" alt="drawing" width="500" height="200"/>
-    </details>
+                <summary>Createpool code </summary>
+                <img src="https://i.imgur.com/eOaUBt3.png" alt="drawing" width="500" height="300"/>
+                </details>
+
+4. Next, two lines below the code above, we are now going to write some MySQL code and add some data to our database and to test if our connections are working as expected. Let's enter in the following lines of code:
+    ```
+    // test connection to database
+    app.get("/", (req,res) => {
+        const sqlInsert = "INSERT INTO movie_reviews (movieName, movieReview) VALUES ('Avengers', 'love');";
+
+        db.query(sqlInsert, (err, result) => {
+            res.send("hi");
+        });
+    });
+    ```
+    - `app.get("/")` -> let express know that we want to run some code whenever there is a HTTP **GET** request with a path of "/"
+    - `(req,res) =>` -> is a callback function. "req", short for request. "res", short for response. They can be named anything but it's standard to name them "req" and "res". "req" object represents the HTTP request and has properties for the request query string, parameters, body, and HTTP headers. "res" object represents the HTTP response that an Express app sends when it gets an HTTP request. Above we use "res" to send a message to our browser, "hi" .
+    - `const sqlInsert` -> creating a variable that will store our SQL code that we want to input to our database.
+        - "**INSERT INTO movie_reviews**": informing our Database that we want to insert data into the **movie_reviews" table that we alreaady created.
+        - "**(movieName, movieReview)**": letting our database know that we want to insert data into our two dataset variables (columns) in our table, that we've created when we set up our database. They have to be the same name as your columns.
+        - "**VALUES ('Avengers', 'love')**": letting our DB know that we want to insert these two strings. 'Avengers' would go in the "movieName" column, and "love" will go in the "movieReview" column.
+    - `db.query(sqlInsert, (err,result))` -> We use `db.query` to let our DB know that we want to run a SQL query (code). The first parameter that we enter into `query()` is the `sqlInsert` variable that stores our SQL code. The second parameter `(err,result)`, "err" stands for error and is used to return an error, if any. "result" we don't need to worry about just yet.
+    - `res.send("hi")` -> is a message we will show in our browser.
+    <details>
+                <summary>DB Query </summary>
+                <img src="https://i.imgur.com/l5uCIH3.png" alt="drawing" width="500" height="300"/>
+                </details>
+                
+5. Now that we wrote our first connection to our DB, let's test out the code that we just entered. Go to a browser tab and enter in the link `http://127.0.0.1:3001/`. This is the browser that your backend is currently running in. Notice that the link is different then where your frontend website is running.
+    <details>
+                <summary>3001 Link </summary>
+                <img src="https://i.imgur.com/etXZ2yv.png" alt="drawing" width="500" height="300"/>
+                </details>
+
+6. Refresh your browser page. Let's head back over to our MySQL Workbench application and now let's refresh our database to see, if the data that we ran is showing up in our database. If everything ran correctly, you should see the "Avengers" data, as seen below:
+    <details>
+                <summary>Workbench data </summary>
+                <img src="https://i.imgur.com/HvxOFDb.gif" alt="drawing" width="500" height="300"/>
+                </details>
+                
+7. Congrats! Your database is successfully connected to your project. Now that we tested that the connection works, we can delete the `sqlInsert` code and `db.query(...)` code. We were only using it for testing.
+    <details>
+                <summary>Updated index.js file </summary>
+                <img src="https://i.imgur.com/8dwYeB8.png" alt="drawing" width="500" height="300"/>
+                </details>
+
+## C - Create Data 
+**Description**: In this section, we will begin the CRUD method, specifically with Creating Data. The section is broken up into 2 sections: **frontend** & **backend**. Whenever you work on a fullstack project, you're always going to have to include logic on both ends (frontend & backend - communicating with each other).
+
+- Frontend
+    1.  Let's head back to our VS Code, and let's open up our client folder and let's head over to our `App.jsx` file. In order for our **frontend** to communicate with our **backend** we are going to have to install a package called **Axios**. Axios will let us make requests to our backend server. So, let's open up our **client** terminal tab. Exit out of your environment with the command `control c`. Follow this up with the command `npm i axios`, to install axios. Make sure you are in the `client` directory. Then, after axios finished installing, restart your frontend environment with the command `npm run dev`.
+        <details>
+                    <summary>Install axios</summary>
+                    <img src="https://i.imgur.com/yOWSHbv.gif" alt="drawing" width="500" height="300"/>
+                    </details>
+    2. Next, in our `App.jsx` file let's import **Axios** to this file. Enter the following code at the top of the file:
+        ```
+        import Axios from 'axios';
+        ```
+        <details>
+                    <summary>import axios</summary>
+                    <img src="https://i.imgur.com/XdUzjcD.png" alt="drawing" width="500" height="300"/>
+                    </details>
+                    
+    3. Let's begin writing some code in our `App.jsx` file. We will now begin writing an Axios connection to our backend. We will be passing data from our frontend to our backend. Enter the following code in your `submitReview` function:
+        ```
+        // send movieName and review data to backend
+          const submitReview = () => {
+            Axios.post("http://127.0.0.1:3001/api/insert", {
+              movieName: movieName,
+              movieReview: review,
+            }) .then(() => {
+              alert("success");
+            });
+          };
+        ```
+        - `Axios.post("http://127.0.0.1:3001/api/insert")` 
+            - Post -> POST request that will send data to our api endpoint via the url link that you see above. Notice that `"http://127.0.0.1:3001/"` is the same link as our backend link. 
+            - `"api/insert"` -> is the url link that we want to send the data to. We will use the same link when we connect our backend for this section.
+        - ```
+            movieName: movieName,
+            movieReview: review,
+            ```
+            - movieName: movieName -> the left "movieName" is the parameter name that we will create in the backend side. The right "movieName" is our "movieName" variable that we created in this file. Locate the Movie Name input in our file, and take notice of the "onChange" function. Based on the value that the user enters in this input, it will store the input into the "setMovieName" variable that we also created in this file. In summary, we are sending the "movieName" data that the user enters into the input to our backend.
+            - movieReview: review -> the left "movieReview" is the parameter name that we will create in the backend side. The right 'review' is our "review" variable that we created in this file. Locate the Movie Review input in our file. Take notice of the "onChange" function. Any value the user enters into this input will store it into the "setReview" variable. 
+            - Typical process : store data (input) into variable -> send it to the backend
+        - Lastly, check where the `submitReview` function is being called. It is being called in the **submit button**, which is called in the React "onClick" function.
+            <details>
+                        <summary>Axios POST request</summary>
+                        <img src="https://i.imgur.com/fpEbBxf.png" alt="drawing" width="500" height="300"/>
+                        </details>
+
     
-    The only difference here is the **<>** and **</>** tag. This tag is known as a **fragment tag**. When rendering JSX elements, you must always include your code inside a **fragment tag** because without it, you won't be able to render more than one tag in **React**. Try to test this out by removing the fragment tag from your code. Your terminal will give you an error saying *"Adjacent elements must be wrapped...."*. 
+- Backend
+    1. Now that we've added our **POST** request on the frontend, we have to receive the connection in our backend. Let's head back to our `server` folder and let's select the `index.js` file. Enter the following code anywhere in your file:
+        ```
+        // C - POST created data to database
+        app.post("/api/insert", (req,res) => {
+            const movieName = req.body.movieName;
+            const movieReview = req.body.movieReview;
+
+            const sqlInsert = "INSERT INTO movie_reviews (movieName, movieReview) VALUES (?,?)";
+
+            db.query(sqlInsert, [movieName,movieReview], (err,result) => {
+                console.log(err);
+            });
+        });
+        ```
+        - `app.post("/api/insert", (req,res) => )`
+            - `app.post()` -> gets the url link from the **POST** request from the frontend.
+            - "/api/insert" -> same url link as the one from our frontend POST request.
+        - `const movieName = req.body.movieName;` -> creating a variable that stores the request variable from our frontend POST request. Keep note that `req.body.movieName` used the same "movieName" variable as the one in our frontend.
+        - `const movieReview = req.body.movieReview` -> same as above.
+        - `const sqlInsert` -> similar SQL Code that we did earlier, but the only difference is `(?,?)`. This let's our code know that we want to enter two values that we get from our frontend (movieName , movieReview).
+        - `db.query(sqlInsert, [movieName,movieReview], (err,result) =>)`
+            - `db.query` -> send a query (SQL Code) to our database
+            - `sqlInsert` -> SQL code we want to run
+            - `[movieName,movieReview]` -> this is where we input the two variables that would go in the `(?,?)` SQL Code.
+            <details>
+                        <summary>Backend POST request</summary>
+                        <img src="https://i.imgur.com/TrNPDk7.png" alt="drawing" width="500" height="300"/>
+                        </details>
+    2. Next, let's head over to our **Website UI Browser**. Refresh your page. In the Movie name input and Movie Review Input, enter some information that you want to insert into your data. Then, click the "Submit button". If everything worked correctly, your data should be uploaded into your database.
+        <details>
+                        <summary>Insert Website Data</summary>
+                        <img src="https://i.imgur.com/QJMocuh.gif" alt="drawing" width="500" height="300"/>
+                        </details>
+    3. Then, head back to your MySQL Workbench application. Refresh your table data. You should now see the movie name and review you just submitted.
+        <details>
+                        <summary>MySQL Workbench Data</summary>
+                        <img src="https://i.imgur.com/hc8U6Es.gif" alt="drawing" width="500" height="300"/>
+                        </details>
+
+
     
 
 ## The End
