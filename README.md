@@ -304,7 +304,28 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
         <summary>run backend server</summary>
         <img src="https://i.imgur.com/14JQ2Mj.gif" alt="drawing" width="500" height="300"/>
         </details>
-        
+
+## Installing MySQL + MySQL Workbench
+> Note: Please install MySQL Workbench. Installation shouldn't take more than 5 minutes. 
+-> [MySQL WorkBench Installation](https://dev.mysql.com/downloads/workbench/)
+-> [MYSQL WorkBench Installation Youtube video](https://www.youtube.com/watch?v=sY_QPWiIeDQ&ab_channel=CodeJava)
+**Description**: MySQL Workbench will allow us to visualize that data that we will be adding to our database. If you've already installed MySQL Workbench, you can move on to the next step.
+
+## Create MySQL Workbench Database
+**Description**: We will be creating our first Database on the application.
+1. Once we've installed the application, let's open it up. Click on the first "MySQL Connection" that you see on your screen. Make sure you remember your "root" password. 
+        <details>
+            <summary>database environment</summary>
+            <img src="https://i.imgur.com/Fxtdjzg.gif" alt="drawing" width="500" height="300"/>
+            </details>
+
+2. In our application, let's located the "Schema" section, which should be to the side of "Administration". On the left side under "Schemas", let's create a new "Schema" (Database). Double click, and click on "create schema". Then, enter the name of your database. I'll name my `MovieReviews`. Then, press "apply" and "apply" again for the next few screens. After this, you should see your newly created database under "Schemas".
+    <details>
+            <summary>create database</summary>
+            <img src="https://i.imgur.com/o2o5iUS.gif" alt="drawing" width="500" height="300"/>
+            </details>
+
+
 
 ## Hello World
 
