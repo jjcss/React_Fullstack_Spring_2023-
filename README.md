@@ -312,19 +312,61 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
 **Description**: MySQL Workbench will allow us to visualize that data that we will be adding to our database. If you've already installed MySQL Workbench, you can move on to the next step.
 
 ## Create MySQL Workbench Database
-**Description**: We will be creating our first Database on the application.
+**Description**: We will be creating our first Database on the application. We will be creating our data set, which will include an `id`, `movieName` & `movieReview`.
 1. Once we've installed the application, let's open it up. Click on the first "MySQL Connection" that you see on your screen. Make sure you remember your "root" password. 
         <details>
             <summary>database environment</summary>
             <img src="https://i.imgur.com/Fxtdjzg.gif" alt="drawing" width="500" height="300"/>
             </details>
 
-2. In our application, let's located the "Schema" section, which should be to the side of "Administration". On the left side under "Schemas", let's create a new "Schema" (Database). Double click, and click on "create schema". Then, enter the name of your database. I'll name my `MovieReviews`. Then, press "apply" and "apply" again for the next few screens. After this, you should see your newly created database under "Schemas".
+2. In our application, let's located the "Schema" section, which should be to the side of "Administration". On the left side under "Schemas", let's create a new "Schema" (Database). Double click, and click on "create schema". Then, enter the name of your database. I'll name my `MovieReviews` (remember the name of your database). Then, press "apply" and "apply" again for the next few screens. After this, you should see your newly created database under "Schemas".
     <details>
             <summary>create database</summary>
             <img src="https://i.imgur.com/o2o5iUS.gif" alt="drawing" width="500" height="300"/>
             </details>
 
+3. Now, let's open up our database, and let's create a new "Table". A table is where we are going to store all our data. To do this, double click on "Table", then click on "Create Table", and name your table "movie_reviews".
+    <details>
+            <summary>create table</summary>
+            <img src="https://i.imgur.com/zU6JCDC.gif" alt="drawing" width="500" height="300"/>
+            </details>
+
+4. Now, we are going to define the data that we'd like to create. The first dataset that we will create is `id`, it's datatype will be `int`, and we should make sure that the "primary key (PK)", "not null (NN)" and "auto increment (AI)" are all turned on. T
+    - the primary key is used to help us uniquely identify each row in a table
+    - Not null means that we never want the `id` to have a null value
+    - Auto increment will increase the `id` value by one everytime we add a new movie review to the table.
+        <details>
+                <summary>create "id" variable </summary>
+                <img src="https://i.imgur.com/7fwRRar.gif" alt="drawing" width="500" height="300"/>
+                </details>
+
+5. Next, let's create our next dataset, `movieName`. Give it a dataype of "VARCHAR(200)". This means that the length of the movie entered cannot be longer than 200 characters. Let's only select the "not null (NN)" option, as we never want a Movie name to be empty.
+    <details>
+                <summary>create "movieName" variable </summary>
+                <img src="https://i.imgur.com/ExE2teA.gif" alt="drawing" width="500" height="300"/>
+                </details>
+
+6. Next, let's create our last dataset, `movieReview`. Give it a datatype of "TEXT(500)". "Text(500)" means that the Movie Review cannot be longer than 500 characters. Let's only selet the "not null (NN)" option, as we never want a Move Review to be empty.
+    <details>
+                <summary>create "movieReview" variable </summary>
+                <img src="https://i.imgur.com/PjsFgB7.gif" alt="drawing" width="500" height="300"/>
+                </details>
+                
+7. Now that we created all variables we will be using, let's go to the bottom right corner, and click on "Apply". Once you click it, you'll see that the application has created SQL code based on your selections. Then, click on "Apply" & "Close".
+    <details>
+                <summary>Apply Table additions </summary>
+                <img src="https://i.imgur.com/dtz3fQd.gif" alt="drawing" width="500" height="300"/>
+                </details>
+
+8. Lastly, locate the "Tables" section and click on the table you just created "movie_reviews". Double click on the table and click on "Select rows - limit 1000". This will allow you to see the 3 datasets that you just created in a table format.
+    <details>
+                <summary>See Table columns </summary>
+                <img src="https://i.imgur.com/XcI1znT.gif" alt="drawing" width="500" height="300"/>
+                </details>
+
+## Connect MySQL Database to your React Project
+**Description**: We will be connecting the database that we just created with our React Project (backend server).
+1. 
 
 
 ## Hello World
