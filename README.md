@@ -518,14 +518,162 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
                         <summary>Insert Website Data</summary>
                         <img src="https://i.imgur.com/QJMocuh.gif" alt="drawing" width="500" height="300"/>
                         </details>
-    3. Then, head back to your MySQL Workbench application. Refresh your table data. You should now see the movie name and review you just submitted.
+    3. Then, head back to your MySQL Workbench application. Refresh your table data. You should now see the movie name and review you just submitted. Congrats!.
         <details>
                         <summary>MySQL Workbench Data</summary>
                         <img src="https://i.imgur.com/hc8U6Es.gif" alt="drawing" width="500" height="300"/>
                         </details>
 
+## R - Read Data 
+**Description**: In this section, we will begin **Reading** the data that we just inserted in the **Create** section. This section is split into two sections, **backend** and **frontend**. Notice that for **Reading** data, we will be starting with the **backend**.
 
+- Backend
+    1. Head over to your `server` folder and select the `index.js` file. We will now be reading data from our `movie_reviews` table from our database, and then sending it to our frontend. To do this, enter the following code anywhere in your file:
+        ```
+        // R - Read movie data from database
+        app.get("/api/get", (req,res) => {
+            const sqlSelect = "SELECT * FROM movie_reviews";
+
+            db.query(sqlSelect, (err,result) => {
+                res.send(result);
+            });
+        });
+        ```
+        - `app.get("/api/get", (req,res))`
+            - `app.get()` -> function used to handle **GET** requests. 
+            - `"/api/get"` -> is the endpoint url that we will use to connect with our frontend
+        - `const sqlSelect = "SELECT * FROM movie_reviews"`;
+            - `SELECT *` -> means get all the data..
+            - `FROM movie_reviews` -> .. from our `movie_reviews` table in our database.
+        - `db.query(sqlSelect, (err,result) => )`
+            - `db.query()` -> use to tell our database to run our SQL Code.
+            - `sqlSelect` -> run SQL code stored in this variable.
+        - `res.send(result)` -> use to send our data (stored in result) to our frontend.
+        <details>
+                        <summary>GET Database Data</summary>
+                        <img src="https://i.imgur.com/i9Y08Iz.png" alt="drawing" width="500" height="300"/>
+                        </details>
     
+- Frontend
+    1. Let's head back to our `client` folder and let's select the `App.jsx` file. Let's head to our `App()` function and let's create new "useState" variables. We will use these variables to store our `movieName` & `movieReview` data. Enter the following code into your file:
+        ```
+        const [movieReviewList, setMovieList] = useState([]);
+        ```
+        - `movieReviewList` -> will store all the movie data (both movieName & movieReview). We are setting (storing) the current data we get.
+        - `setMovieList` -> will update the data (both movieName & movieReview) to update the state of the data.
+        - Notice that the **useState** takes in an empty array. This array will store the data that we get from our backend.
+            <details>
+                        <summary>create Movie Data array</summary>
+                        <img src="https://i.imgur.com/0CVKdd0.png" alt="drawing" width="500" height="300"/>
+                        </details>
+                        
+    2. Now, let's locate our `useEffect()` empty function. `useEffect` is a built in React function that allows us to run code every time the web page renders. This is helpful for **GET** requests. So, inside of this function let's add in the following code that will allow us to connect to our **backend**, receive the backend data (movie data), and use the `setMovieList` to update our movie data state:
+        ```
+        useEffect(() => {
+            Axios.get("http://127.0.0.1:3001/api/get").then((response) => {
+              setMovieList(response.data);
+            });
+        }, []);
+        ```
+        - `Axios.get()` -> using **Axios** to connect with our **backend**.
+        - `"http://127.0.0.1:3001/api/get"` -> using the same link as we did in our backend (endpoint). 
+        - `.then((response) =>)` -> if our endpoint works, then we use the `.then()` function to receive the data from our backend and store it in the `response` parameter.
+        - `setMovieList(response.data)` -> accessing data in `response.data` and then setting our data from our backend and updating the state of `setMovieList`. 
+            <details>
+                        <summary>Setting movie data</summary>
+                        <img src="https://i.imgur.com/NwDiq7k.png" alt="drawing" width="500" height="300"/>
+                        </details>
+    3. Now, to begin displaying our data in our Website UI, and let's locate the mock data that we have for the Spiderman movie (row). The code should look like this:
+        ```
+        {/* One movie row */}
+          <div>
+            <div className="movie-container">
+                  <div className="movie-review-inner-container">
+                      <h3 className="movie-review-title">Spider Man (2002)</h3>
+                     <br />
+                      <p className="review-desc"> This movie is a masterpiece. Spider-Man (2002) is generally one of my favorite Spider-Man movies of all time, it tells an amazing origin story about Peter Parker and how he became everyone's favorite Wall-Crawler. First the actors did a fantastic job in this movie including William Defoe, his performance as Green Goblin is easily the most iconic part about this movie and how his interpretation of Green Goblin is easily one of the best villains in Spidey's arsenal.  </p>
+                  </div>
+
+                  {/* Review Input */}
+                  <textarea className='input_style2' type="text" onChange={(e) => {
+                        setNewReview(e.target.value);
+                      }} />
+
+                  <div className= "buttons-container">
+                    {/* update button */}
+                    <button className="update-button" onClick={() => {
+                      updateReview(val.movieName)
+                    }} >Update</button>
+                        &nbsp; &nbsp;
+
+                    {/* delete button */}
+                    <button onClick={() => {
+                      deleteReview(val.movieName)
+                    }} className="delete-button">Delete</button>
+                </div>
+                <br /><br />
+            </div>
+          </div>
+          {/*  */}
+        ```
+    4. Right above before the row starts, we are going to add the following code that will allow us to loop over our `movieReviewList` array and begin displaying the data inside of it:
+        ```
+        {movieReviewList.map((val) => {
+            return
+        })}
+        ```
+        - `movieReviewList` -> is our variable that stores all our movie data (we got from our backend)
+        - `.map((val) => )` -> for loop function that will allow us to access each single movie data in `movieReviewList`, using the `val` parameter.
+        - `return` -> we will use to return our row from **Step 3**.
+            <details>
+                        <summary>Loop over movieReviewList</summary>
+                        <img src="https://i.imgur.com/Gei8eRj.png" alt="drawing" width="500" height="300"/>
+                        </details>
+                        
+
+    5. Next, let's copy our row code (from **step 3**), and let's paste it inside of our `.map() function` we did in **step 4**, after the `return` keyword. 
+        <details>
+                        <summary>Copy & Paste Row code</summary>
+                        <img src="https://i.imgur.com/3iwmFtI.gif" alt="drawing" width="500" height="300"/>
+                        </details>
+
+
+    6. Next, now that we are looping over our data, let's locate the the `h3` tag (inside of the movie row) where the mock Movie Name data is located(Spider Man (2002). The `h3` tag should look like this:
+        ```
+        <h3 className="movie-review-title">Spider Man (2002)</h3>
+        ```
+        - Replace **Spider Man (2002)** with the following code:
+            ```
+            <h3 className="movie-review-title">{val.movieName}</h3>
+            ```
+            - `{val.movieName}` -> we are using the `val` parameter to access the "movieName" data.
+    7. Now, let's locate the `p` tag, inside of the moview row, where the mock movie review data is located (This movie is a masterpiece...). The `p` tag should look like this:
+        ```
+        <p className="review-desc"> This movie is a masterpiece. Spider-Man (2002) is generally one of my favorite Spider-Man movies of all time, it tells an amazing origin story about Peter Parker and how he became everyone's favorite Wall-Crawler. First the actors did a fantastic job in this movie including William Defoe, his performance as Green Goblin is easily the most iconic part about this movie and how his interpretation of Green Goblin is easily one of the best villains in Spidey's arsenal.  </p>
+        ```
+        - Replace the Spiderman **movie review** with the following code:
+            ```
+            <p className="review-desc"> {val.movieReview} </p>
+            ```
+            - `{val.movieReview}` -> we are using the `val` parameter to access the "movieReview" data.
+        <details>
+                        <summary>Updated movie row</summary>
+                        <img src="https://i.imgur.com/oX2q9Y7.png" alt="drawing" width="500" height="300"/>
+                        </details>
+
+    8. Next, let's head ove to our **Website (UI) browser tab**, and let's see our new changes. We should now see all our data from our database in the website.
+        <details>
+            <summary>Movie Data on Website</summary>
+            <img src="https://i.imgur.com/Tt3Hzjg.gif" alt="drawing" width="500" height="300"/>
+            </details>
+    9. Now, in the website, enter in a new movie name and movie review in the input fields. Try scrolling down to see if it shows on the website. It doesn't show on the website automatically, but if your **reload** the page and scroll down, you should now see the new movie name and movie review.
+        <details>
+            <summary>Add new name and review on website</summary>
+            <img src="https://i.imgur.com/icDjRxd.gif" alt="drawing" width="500" height="300"/>
+            </details>
+    
+    10. To automatically show the new **movie name** and **movie review** you have to add in the following lines of code
+
 
 ## The End
 **Summary**: Congratulations on .....
