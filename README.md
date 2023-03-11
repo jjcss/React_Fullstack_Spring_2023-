@@ -261,7 +261,8 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
         <img src="https://i.imgur.com/iqgqQub.gif" alt="drawing" width="500" height="300"/>
         </details>
     - Lastly, since we've installed the **nodemon** package, let's go to our `package.json` file in our VS Code. Your file probably looks like this:
-        - > {
+        - ```
+          {
               "name": "server",
               "version": "1.0.0",
               "description": "",
@@ -279,11 +280,15 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
                 "nodemon": "^2.0.21"
               }
             }
+          ```
         - Let's update this file to include these two nodemon lines, inside of "scripts". The lines below will allow our server backend to refresh continuously without us having to restart it everytime we make a new change:
-            - > "start": "node index.js",
-    "devStart": "nodemon index.js",
+            - ```
+              "start": "node index.js",
+              "devStart": "nodemon index.js",
+              ```
         - Your `package.json` file should now have this code:
-            - > {
+            - ```
+              {
                   "name": "server",
                   "version": "1.0.0",
                   "description": "",
@@ -303,6 +308,7 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
                     "nodemon": "^2.0.21"
                   }
                 }
+              ```
 
 4. Creating Server File (index.js)
     - Now, let's go back to VS Code, and inside of our `server` folder, let's create a `index.js` file. In this file, we'll include logic for our backend.
