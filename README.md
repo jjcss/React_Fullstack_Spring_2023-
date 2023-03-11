@@ -767,16 +767,17 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
                   setNewReview(e.target.value);
                 }} />
                 ```
-                In this `textarea` tag, we have an `onChange((e))` function that takes in a `e` parameter. Inside of the function we have the line of code `ke this:
-<textarea className='input_style2' type="text" onChange={(e) => {
-  setNewReview(e.target.value);`. This line basically takes the `e` paramter, that stores the input that the user enters that we will use to update the review of the movie, and updates the state of `setNewReview()`, with the input the user enters.
+                - In this `textarea` tag, we have an `onChange((e))` function that takes in a `e` parameter. Inside of the function we have the line of code like this:
+             `<textarea className='input_style2' type="text" onChange={(e) => {
+  setNewReview(e.target.value);`
+                     - This line basically takes the `e` paramter, that stores the input that the user enters that we will use to update the review of the movie, and updates the state of `setNewReview()`, with the input the user enters.
            - Next, scroll down a bit and locate the **Update** `button` tag. It's code should look like this:
                ```
                <button className="update-button" onClick={() => {
                  updateReview(val.movieName)
                }} >Update</button>
                ```
-               In this `button` tag, we have a `onClick()` function, that gets triggered when the user clicks the button. If the user clicks the button, our `updateReview()` function get's called and gets the `movieName` of the specific movie the user chooses, and passes it as a parameter to the function. This triggers our `updateReview()` function logic to be triggered.
+               - In this `button` tag, we have a `onClick()` function, that gets triggered when the user clicks the button. If the user clicks the button, our `updateReview()` function get's called and gets the `movieName` of the specific movie the user chooses, and passes it as a parameter to the function. This triggers our `updateReview()` function logic to be triggered.
         <details>
             <summary>updateReview() function</summary>
             <img src="https://i.imgur.com/F3QNrp6.png" alt="drawing" width="500" height="300"/>
