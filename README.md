@@ -695,11 +695,113 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
     12. Congrats on learning how to **Read** and display your data on your website.
 
 ## U - Update Data 
-**Description**: In this section, we will begin **Reading** the data that we just inserted in the **Create** section. This section is split into two sections, **backend** and **frontend**. Notice that for **Reading** data, we will be starting with the **backend**.
+**Description**: In this section, we will begin **updating** the data (movie Review) that we display in our Website UI. This section is split into two sections, **frontend** and **backend**. Notice that for **Updating** data, we will be starting with the **frontend**.
+
+- Frontend
+    1. In our `App.jsx` file let's locate our `updateReview()` function. This Function takes in a `movie` parameter. Inside of this function, the following code we enter will send the updated `movieName` & `newReview` to our backend server:
+        ```
+        // update our Movie Review
+          const updateReview = (movie) => {
+            Axios.put("http://127.0.0.1:3001/api/update", {
+              movieName: movie,
+              movieReview: newReview,
+            });
+
+            setNewReview("");
+          }
+        ```
+        - `Axios.put("http://127.0.0.0.1:300/api/update")` -> the `put() function` is used to make a **PUT** request, which updates data. Inside of the function we have the URL link **endpoint** that we will use to send our new data to the our backend server.
+        - ```
+          movieName: movie,
+          movieReview: newReview,
+          ```
+            - passing our updated`movie` (parameter) & `newReview` data to our backend.
+        - `setNewReview("")` -> after we send our updated data to our backend, we will updated the state of `setNewReview` to an empty string.
+            - Notice that we created a `newReview` & `setNewReview` state variables. 
+            - Now, locate our `textarea` tag in this file. The code should look like this:
+                ```
+                <textarea className='input_style2' type="text" onChange={(e) => {
+                  setNewReview(e.target.value);
+                }} />
+                ```
+                In this `textarea` tag, we have an `onChange((e))` function that takes in a `e` parameter. Inside of the function we have the line of code `ke this:
+<textarea className='input_style2' type="text" onChange={(e) => {
+  setNewReview(e.target.value);`. This line basically takes the `e` paramter, that stores the input that the user enters that we will use to update the review of the movie, and updates the state of `setNewReview()`, with the input the user enters.
+           - Next, scroll down a bit and locate the **Update** `button` tag. It's code should look like this:
+               ```
+               <button className="update-button" onClick={() => {
+                 updateReview(val.movieName)
+               }} >Update</button>
+               ```
+               In this `button` tag, we have a `onClick()` function, that gets triggered when the user clicks the button. If the user clicks the button, our `updateReview()` function get's called and gets the `movieName` of the specific movie the user chooses, and passes it as a parameter to the function. This triggers our `updateReview()` function logic to be triggered.
+        <details>
+            <summary>updateReview() function</summary>
+            <img src="https://i.imgur.com/F3QNrp6.png" alt="drawing" width="500" height="300"/>
+            </details>
+
+
 
 - Backend
-    1. 
+    1. Let's head over to our `server` folder and let's select the `index.js` file. The following code will take in the data the frontend is sending us, and will update our MySQL database:
+        ```
+        // U - Update data in database
+        app.put("/api/update", (req,res) => {
+            const name = req.body.movieName;
+            const review = req.body.movieReview;
+            const sqlUpdate = "UPDATE movie_reviews SET movieReview = ? WHERE movieName = ?";
 
+            db.query(sqlUpdate, [review, name], (err,result) => {
+                console.log(err);
+            });
+        });
+        ```
+        - `app.put("/api/update")` -> makes PUT request to our server. Inside of the `put()` function we have the **update** url **endpoint** we get from our **frontend**.
+        - ```
+          const name = req.body.movieName;
+          const review = req.body.movieReview;
+          ```
+          - variables used to store the `movieName` and `movieReview` we get from our frontend (using our req parameter)
+        - `const sqlUpdate = "UPDATE movie_reviews SET movieReview = ? WHERE movieName = ?"` -> SQL code that basically translates to, "update our database's `movie_reviews` table, and set (change) the `movieReview` (column) that equals to our `review` parameter, where the `movieName` (colmn) is equal to our `name` parameter we pass into our `db.query()` function".
+        - `db.query(sqlUpdate, [review,name])` -> gives a query to our database. The first parameter is the SQL code we want to run. The second parameter has an array, where it's first value `review` is input into the first "?" of the SQL code and the `name` value is input into the second "?" of the SQL code.
+        <details>
+            <summary>Update Database</summary>
+            <img src="https://i.imgur.com/B1POCqD.png" alt="drawing" width="500" height="300"/>
+            </details>
+    2. Next, let's go back to our webiste tab browser, and let's go to any movie, and let's input a new review for it. After you enter the review, click **update**. Refresh the page. You should now see that the movie's review that you chose is updated. Congrats!
+        <details>
+            <summary>Website Data Update</summary>
+            <img src="https://i.imgur.com/IGQbOg8.gif" alt="drawing" width="500" height="300"/>
+            </details>
+
+## D - Delete Data 
+**Description**: Lastly, in this section, we will begin **deleting** the data (movie Review) that we display in our Website UI. This section is split into two sections, **frontend** and **backend**. Notice that for **Updating** data, we will be starting with the **frontend**.
+
+- Frontend
+    1. Let's head back to our `client` folder, and let's select the `App.jsx` file. Let's locate our `deleteReview()` function. This function takes in a `movie` parameter. Inside of this function, the following code we enter will send the movieName we want to delete to our backend server:
+        ```
+        const deleteReview = (movie) => {
+            Axios.delete("http://127.0.0.1:3001/api/delete/${movie}");
+        };
+        ```
+        - `Axios.delete()` 
+            - sends our backend server a **DELETE** request.
+            - Inside of the function we insert a URL Link **endpoint** that our backend will use to communicate with our frontend.
+            - At the end of the link we have `${movie}`, which is how we are able to pass in the `movie` parameter, which will let our backend server know which movie to **DELETE**.
+        - Let's now locate the **DELETE** `button` tag in this file. The code should look like this:
+            ```
+            <button onClick={() => {
+                deleteReview(val.movieName)
+              }} className="delete-button">Delete</button>
+            ```
+            - In this `button` tag, we added a `onClick()` function that will run whenever a user clicks on the button. 
+            - Inside of the function, we call call our `deleteReview()` function and we pass in the `val.movieName` value as parameter inside of it. `val.movieName` will pass in the name of the movie that you have chosen to delete.
+        <details>
+            <summary>deleteReview() function</summary>
+            <img src="https://i.imgur.com/PLXtjme.png" alt="drawing" width="500" height="300"/>
+            </details>
+            
+- Backend
+    1. Let's head back to our `server` folder and let's select our `index.js` file. The following code will take in the data the frontend is sending us, and will update our MySQL database: 
     
 ## The End
 **Summary**: Congratulations on .....
