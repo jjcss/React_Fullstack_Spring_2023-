@@ -889,6 +889,8 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
 - [React Website: Learn more](https://reactjs.org/community/courses.html)
 - [React Youtube Course](https://www.youtube.com/watch?v=bMknfKXIFA8&t=2154s)
 - [CRUD Method](https://www.freecodecamp.org/news/crud-operations-explained/)
+- [Vite](https://vitejs.dev/guide/)
+- [MySQL Workbench Installation](https://dev.mysql.com/downloads/workbench/)
 
 
 
