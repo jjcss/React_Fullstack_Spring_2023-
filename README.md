@@ -11,6 +11,15 @@
 - [React Demo](#React-Demo)
     - [Pre-Demo](#Pre-Demo)
     - [Review Code Template](#Review-Code-Template)
+    - [Creating our Backend Server](#Creating-our-Backend-Server)
+    - [Installing MySQL + MySQL Workbench](#Installing-MySQL-+-MySQL-Workbench)
+    - [Create MySQL Workbench Database](#Create-MySQL-Workbench-Database)
+    - [Connect MySQL Database to your React Project](#Connect-MySQL-Database-to-your-React-Project)
+    - [C - Create Data](#C---Create-Data)
+    - [R - Read Data](#R---Read-Data)
+    - [U - Update Data](#U---Update-Data)
+    - [D - Delete Data](#D---Delete-Data)
+    - [The End](#The-End)
 - [Continue Learning About React](#Continue-Learning-About-React)
 
 # React (Fullstack) Workshop 
@@ -28,11 +37,35 @@
 **Description**: We will be learning how to connect a React Project to a backend (MySQL). With this, we will be building a **Movie Application**, where we can add any new movies and its review that you watched. <br>
 **We will be going over**: 
 - Using **Vite** to run our React application
-- Connect our React Project to a backend server
+- Connect our React Project to a backend server, MySQL (MySQL Workbench)
 - CRUD Method
 
-**Final Product**:
-.... gif here....
+**What is the CRUD Method?**:
+The **[CRUD](https://www.freecodecamp.org/news/crud-operations-explained/)** method refers to the four basic operations a software application should be able to perform and it stands for:
+- C: Creating Data
+    - Done through a **POST** request
+- R: Updating Data
+    - Done through a **GET** request
+- U: Updating Data
+    - Done through a **PUT** request
+- D: Deleting Data
+    - Done through a **DELETE** request
+
+
+**Final Website State of our Project**:
+<details>
+        <summary>Creating and Reading Data</summary>
+        <img src="https://i.imgur.com/vg50zh3.gif" alt="drawing" width="500" height="300"/>
+        </details>
+<details>
+        <summary>Updating Data</summary>
+        <img src="https://i.imgur.com/IzjHpza.gif" alt="drawing" width="500" height="300"/>
+        </details>
+<details>
+        <summary>Deleting Data</summary>
+        <img src="https://i.imgur.com/w3sEXdA.gif" alt="drawing" width="500" height="300"/>
+        </details>
+        
 
 ---
 
@@ -524,6 +557,8 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
                         <img src="https://i.imgur.com/hc8U6Es.gif" alt="drawing" width="500" height="300"/>
                         </details>
 
+> Note: To make sure everything is going right, always keep an eye on your **MySQL Workbench** to see that all data is being shown.
+
 ## R - Read Data 
 **Description**: In this section, we will begin **Reading** the data that we just inserted in the **Create** section. This section is split into two sections, **backend** and **frontend**. Notice that for **Reading** data, we will be starting with the **backend**.
 
@@ -694,6 +729,8 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
             </details>
     12. Congrats on learning how to **Read** and display your data on your website.
 
+> Note: To make sure everything is going right, always keep an eye on your **MySQL Workbench** to see that all data is being shown.
+
 ## U - Update Data 
 **Description**: In this section, we will begin **updating** the data (movie Review) that we display in our Website UI. This section is split into two sections, **frontend** and **backend**. Notice that for **Updating** data, we will be starting with the **frontend**.
 
@@ -773,6 +810,8 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
             <img src="https://i.imgur.com/IGQbOg8.gif" alt="drawing" width="500" height="300"/>
             </details>
 
+> Note: To make sure everything is going right, always keep an eye on your **MySQL Workbench** to see that all data is being shown.
+
 ## D - Delete Data 
 **Description**: Lastly, in this section, we will begin **deleting** the data (movie Review) that we display in our Website UI. This section is split into two sections, **frontend** and **backend**. Notice that for **Updating** data, we will be starting with the **frontend**.
 
@@ -780,13 +819,13 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
     1. Let's head back to our `client` folder, and let's select the `App.jsx` file. Let's locate our `deleteReview()` function. This function takes in a `movie` parameter. Inside of this function, the following code we enter will send the movieName we want to delete to our backend server:
         ```
         const deleteReview = (movie) => {
-            Axios.delete("http://127.0.0.1:3001/api/delete/${movie}");
+            Axios.delete("http://127.0.0.1:3001/api/delete/"+String(movie));
         };
         ```
         - `Axios.delete()` 
             - sends our backend server a **DELETE** request.
             - Inside of the function we insert a URL Link **endpoint** that our backend will use to communicate with our frontend.
-            - At the end of the link we have `${movie}`, which is how we are able to pass in the `movie` parameter, which will let our backend server know which movie to **DELETE**.
+            - At the end of the link we have `+String(movie)`, which is how we are able to pass in the `movie` parameter, which will let our backend server know which movie to **DELETE**.
         - Let's now locate the **DELETE** `button` tag in this file. The code should look like this:
             ```
             <button onClick={() => {
@@ -797,14 +836,44 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
             - Inside of the function, we call call our `deleteReview()` function and we pass in the `val.movieName` value as parameter inside of it. `val.movieName` will pass in the name of the movie that you have chosen to delete.
         <details>
             <summary>deleteReview() function</summary>
-            <img src="https://i.imgur.com/PLXtjme.png" alt="drawing" width="500" height="300"/>
+            <img src="https://i.imgur.com/qQgcnjr.png" alt="drawing" width="500" height="300"/>
             </details>
             
 - Backend
     1. Let's head back to our `server` folder and let's select our `index.js` file. The following code will take in the data the frontend is sending us, and will update our MySQL database: 
+        ```
+        // D - Delete data from database
+        app.delete("/api/delete/:movieName", (req,res) => {
+            const name = req.params.movieName;
+            const sqlDelete = "DELETE FROM movie_reviews WHERE movieName = ?";
+
+            db.query(sqlDelete, name, (err,result) => {
+                if (err) console.log(err);
+            });
+        });
+        ```
+        - `app.delete()` -> used to make a **DELETE** request
+        - "/api/delete/:movieName" -> is our API **endpoint** url that is used when connecting with our frontend. `:movieName`, is how we receive the `movieName` from our frontend that we want to delete in our database.
+        - `const name = req.params.movieName;`
+            - Notice how we have `req.params` rather than `req.body`. `req.params` is used when passing in (reading) parameters in our **URL**. Thus, with `req.params.movieName` we are getting the parameters `movieName` value.
+        - `const sqlDelete = "DELETE FROM movie_reviews WHERE movieName = ?";` -> SQL Code that basicallys says "delete moviewName that equals to the value begin passed in for the (?) in the movieName table".
+        - `db.query(sqlDelete, name)`
+            - `db.query()` -> used to run our `sqlDelete` SQL code
+            - `name` -> here we are passing in the `name` varialbe that stores the `movieName` we want to delete.
+        <details>
+            <summary>Delete data from database</summary>
+            <img src="https://i.imgur.com/ENy3aPa.png" alt="drawing" width="500" height="300"/>
+            </details>
+    2. Let's head back to our browser and let's check if we are able to delete our Movie data. Select any movie and click on the **DELETE** button. Don't forget to refresh the page afterwards. You shouldn't be able to see the movie you just delete on your website. Congrats on learning how to delete your data!
+        <details>
+            <summary>Delete data from Website</summary>
+            <img src="https://i.imgur.com/qOwdEvS.gif" alt="drawing" width="500" height="300"/>
+            </details>
+ 
+ > Note: To make sure everything is going right, always keep an eye on your **MySQL Workbench** to see that all data is being shown.
     
 ## The End
-**Summary**: Congratulations on .....
+**Summary**: Congratulations on learning how to connect a **React** project to a backend, and learning how to use the **CRUD** method. We hope you left this meeting with a better understanding of React and how to use **MySQL** as a backend, along with **MySQL Workbench**. Feel free to look at the resources we've compiled below, which includes
 
 ---
 
@@ -812,6 +881,7 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
 - [11-Hour React Free Course](https://scrimba.com/learn/learnreact)
 - [React Website: Learn more](https://reactjs.org/community/courses.html)
 - [React Youtube Course](https://www.youtube.com/watch?v=bMknfKXIFA8&t=2154s)
+- [CRUD Method](https://www.freecodecamp.org/news/crud-operations-explained/)
 
 
 
