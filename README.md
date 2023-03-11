@@ -672,9 +672,35 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
             <img src="https://i.imgur.com/icDjRxd.gif" alt="drawing" width="500" height="300"/>
             </details>
     
-    10. To automatically show the new **movie name** and **movie review** you have to add in the following lines of code
+    10. To automatically show the new **movie name** and **movie review** on the website you have to add in some logic. In our file, let's locate our `submitReview()` function. In the function let's delete the `.then(...)` function, as we don't need it. 
+        <details>
+            <summary>Delete .then() function</summary>
+            <img src="https://i.imgur.com/xBjkPsZ.gif" alt="drawing" width="500" height="300"/>
+            </details>
+    11. Now, in the `submitReview()` function, we are going to add in the following code that will allow us to update the state of our data and set it to `setMovieList()`:
+        ```
+        setMovieList([...movieReviewList, {movieName: movieName, movieReview: review}]);
+        ```
+        - `[...movieReviewList, {movieName: movieName, movieReview: review}]`
+            - `...movieReviewList` -> select all data stored in `movieReviewList` array
+            - `{movieName: movieName, movieReview: review}` -> pass in object with new `movieName` & `review`, which allows us to update our webiste and display the data as soon as it is submitted.
+        <details>
+            <summary>update setMovieList state</summary>
+            <img src="https://i.imgur.com/NR206hQ.png" alt="drawing" width="500" height="300"/>
+            </details>
+        <details>
+            <summary>See data added in Website</summary>
+            <img src="https://i.imgur.com/7W6329E.gif" alt="drawing" width="500" height="300"/>
+            </details>
+    12. Congrats on learning how to **Read** and display your data on your website.
 
+## U - Update Data 
+**Description**: In this section, we will begin **Reading** the data that we just inserted in the **Create** section. This section is split into two sections, **backend** and **frontend**. Notice that for **Reading** data, we will be starting with the **backend**.
 
+- Backend
+    1. 
+
+    
 ## The End
 **Summary**: Congratulations on .....
 
