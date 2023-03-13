@@ -26,7 +26,7 @@
 
 **Date:** Monday, March 13th, 2022 <br>
 **Description**: In this workshop You will learn about arguably the most used framework out there, React. We’ll go over how to connect our React projects to a backend, in this case, MySQL. Then, we'll go over how to implement the CRUD method in our React projects to display data. <br>
-**Workshop Zoom Recording**: [TBD]() <br>
+**Workshop Zoom Recording**: [click here](https://jjay-cuny.zoom.us/rec/share/68fOoMBHIGsY2myh8c3kQd2v944gZWUjoUFN1pOgGa3HeZ2o6dpYE35-hGIdrKqr.KXvd2lRog5xw05f3) <br>
 **Workshop Google Slides**: [click here](https://docs.google.com/presentation/d/1X6gUbam4Y1t6cYgGHVcTXn-QY0HG0g3L4j5oedUXTRM/edit?usp=sharing) <br>
 
 ---
