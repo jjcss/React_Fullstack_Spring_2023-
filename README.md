@@ -345,8 +345,8 @@ Take a few minutes to review the code in Visual Studio code. What is in the file
         </details>
 
 ## Installing MySQL + MySQL Workbench
-> Note: Please install MySQL Workbench. Installation shouldn't take more than 5 minutes. 
--> [MySQL WorkBench Installation](https://dev.mysql.com/downloads/workbench/)
+> Note: Please install MySQL Workbench. Installation shouldn't take more than 5 minutes. <br>
+-> [MySQL WorkBench Installation](https://dev.mysql.com/downloads/workbench/)<br>
 -> [MYSQL WorkBench Installation Youtube video](https://www.youtube.com/watch?v=sY_QPWiIeDQ&ab_channel=CodeJava) <br>
 **Description**: MySQL Workbench will allow us to visualize that data that we will be adding to our database. If you've already installed MySQL Workbench, you can move on to the next step.
 
